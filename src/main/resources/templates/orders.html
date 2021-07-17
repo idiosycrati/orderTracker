@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet">
+
+    <link rel = "stylesheet"
+    href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+ <script type = "text/javascript"
+    src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>           
+ <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Document</title>
+</head>
+<body>
+  
+  <script>
+    function sample() {
+      console.log("pressed");
+    }
+
+
+  </script>
+
+    <!-- <img src="https://lorempixel.com/100/190/nature/6"> -->
+    <div class="row">
+
+      <div class="col s2" >
+  
+        <ul id="slide-out" class="sidenav sidenav-fixed">
+          <center><li class="active"><a th:href="@{/}">Production<i class="material-icons">loop</i></a></li></center>
+          <center><li><a th:href="@{/takeOrder}">Take Orders<i class="material-icons">local_grocery_store</i></a></li></center>
+          <center><li><a href="#!">Shipping<i class="material-icons ">local_shipping</i></a></li></center>
+          <center><li><a href="#!">Inventory<i class="material-icons ">storage</i></a></li></center>
+          <center><li><a href="#!">Logs<i class="material-icons ">format_align_left</i></a></li></center>
+        </ul>
+      </div>
+
+      <div class="col s9">
+    
+      
+      <div class="row" style="margin-left: 8%; margin-right: auto;">
+    
+        <div class="col s12"  id="p1">
+          <blockquote>
+            <h5 class="header">On Going Order</h5>
+          </blockquote> 
+            <div class="col s12 m7" style="display: contents; justify-content: center;">
+                <center><h2 class="header">Order #abc123</h2></center>
+                <div class="card horizontal">
+                  <div class="card-image">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png">
+                  </div>
+                  <div class="card-stacked">
+                    <div class="card-content">
+                      
+                    <center> 
+
+                     <div class="row">
+
+                      <div class="col s6">
+
+                        <p><b>Garment Type:</b>sadasd</p>
+                        <p><b>Garment Material:</b>sadasd</p>
+                        <p><b>Color Code:</b>dasd</p>
+                        <p><b>Design:</b>dsadas</p>
+
+                      </div>
+
+                      <div class="col s6">
+
+                        <p><b>Date Received (Production):</b>dasd</p>
+                        <p><b>Date Started:</b>dasdasd</p>
+                        <p><b>Time Processed:</b>dasdsa</p>
+
+                      </div>
+           
+                      <div class="col s12">
+
+                        <p><b>Notes:</b>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a erat sit amet magna accumsan suscipit. Phasellus cursus congue turpis. Vestibulum id justo ante. Pellentesque faucibus feugiat diam, sed fermentum elit accumsan nec. </p>
+                     
+
+                      </div>
+
+
+
+                     </div>
+                    
+                   
+                     
+                   
+                    </center> 
+                      </div>
+                    <div class="card-action">
+                    <a href="#" class="deep-purple-text" onclick="sample()">Edit<i class="material-icons">edit</i></a>
+                    <a href="#" class="red-text" onclick="sample()">Stop<i class="material-icons">stop</i></a>
+                      <a href="#" class="orange-text">Pause<i class="material-icons">pause</i></a>
+                      <a href="#" class="green-text">Finish<i class="material-icons">check</i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+ 
+    </div>
+   
+  
+<div class="col s12" id="bord1"></div>
+
+        <div class="col s12" id="p2"   >
+    
+          <blockquote>
+            <h5 class="header">Orders</h5>
+          </blockquote> 
+
+          <ul class = "collapsible popout" data-collapsible = "accordion">
+            <li>
+               <div class = "collapsible-header">
+                   <b>1. &nbsp</b>Order Number</div>
+               <div class = "collapsible-body">
+
+                  <div class="row">
+
+                      <div class="col s6">
+
+                        <p><b>Garment Type:</b>sadasd</p>
+                        <p><b>Garment Material:</b>sadasd</p>
+                        <p><b>Color Code:</b>dasd</p>
+                        <p><b>Design:</b>dsadas</p>
+
+                      </div>
+
+                      <div class="col s6">
+
+                        <p><b>Date Received (Production):</b>dasd</p>
+                        <p><b>Date Started:</b>dasdasd</p>
+                        <p><b>Time Processed:</b>dasdsa</p>
+
+                      </div>
+
+
+                     </div>
+                    
+                <div class="col s12" id="bord1"></div>
+                <div class="row">
+
+
+
+
+
+
+                  <div class="col s3">
+                  <div class="card-action">
+                    <a href="#" class="deep-purple-text link1" onclick="sample()">Edit<i class="material-icons">edit</i></a>
+                    <a href="#" class="lightblue-text link1">Open<i class="material-icons">open_in_new</i></a>
+                    <a href="#" class="green-text link1" onclick="sample()">Start<i class="material-icons">play_arrow</i></a>
+                    <a href="#" class="red-text link1">Cancel<i class="material-icons">cancel</i></a>
+                    
+                  
+                    </div>
+                    </div>
+                </div>
+               
+              </div>
+            </li>
+            
+         </ul>
+         
+
+   
+
+        </div>
+    
+      </div>
+ 
+      </div>
+    </div>
+    <script>
+
+
+$(document).ready(function(){
+    $('.collapsible').collapsible({
+      accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+    });
+  });
+      
+            
+  //     document.addEventListener('DOMContentLoaded', function() {
+  //   var elems = document.querySelectorAll('.collapsible');
+  //   var instances = M.Collapsible.init(elems, options);
+  // });
+    </script>
+
+</body>
+</html>

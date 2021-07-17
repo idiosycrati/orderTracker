@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+
+  <link rel = "stylesheet"
+  href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+<script type = "text/javascript"
+  src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>           
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+
+
+  <link rel="stylesheet" href="css/styles.css">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function sample() {
+      console.log("pressed");
+    }
+
+ 
+  </script>
+
+
+    <!-- <img src="https://lorempixel.com/100/190/nature/6"> -->
+    <div class="row">
+
+      <div class="col s2" >
+  
+        <ul id="slide-out" class="sidenav sidenav-fixed">
+          <center><li ><a th:href="@{/}">Production<i class="material-icons">loop</i></a></li></center>
+          <center><li class="active"><a th:href="@{/takeOrder}">Take Orders<i class="material-icons">local_grocery_store</i></a></li></center>
+          <center><li><a href="#!">Shipping<i class="material-icons ">local_shipping</i></a></li></center>
+          <center><li><a href="#!">Inventory<i class="material-icons ">storage</i></a></li></center>
+          <center><li><a href="#!">Logs<i class="material-icons ">format_align_left</i></a></li></center>
+        </ul>
+      </div>
+
+      <div class="col s9">
+       
+
+        <div class="row" style="margin-left: 8%;">
+          <blockquote>
+            <h5 class="header">Enter Order Information</h5>
+          </blockquote>
+          <div class="col s12"  id="p1">
+        
+          
+            <div class="row">
+              
+              
+  <div class="container">
+              <div class="input-field col s12">
+                <input placeholder="#ABC123" id="first_name" type="text" class="validate">
+                <label for="first_name">ORDER NUMBER</label>
+              </div>
+
+              <div class="input-field col s12">
+                <input type="text" class="datepicker" placeholder="dd-mm-yyyy" id="dateprod" >
+                <label for="dateprod">DATE RECEIEVED (PRODUCTION) </label>
+              </div>
+
+
+              <div class="input-field col s12">
+                <input placeholder="#ABC123" id="first_name" type="text" class="validate">
+                <label for="first_name">COLOR NUMBER</label>
+              </div>
+
+
+              
+              <!-- <div class="input-field col s12">
+                <input placeholder="#ABC123" id="first_name" type="text" class="validate">
+                <label for="first_name">DESIN NUMBER</label>
+              </div> -->
+
+              <div class="input-field col s12 m6">
+                <select class="icons">
+                  <option value="" disabled selected>Choose Garment</option>
+                  <option value="" data-icon="https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png" class="left">example 1</option>
+                  <option value="" data-icon="https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png" class="left">example 2</option>
+                  <option value="" data-icon="https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png" class="left">example 3</option>
+                </select>
+                <label>Images in select</label>
+              </div>
+
+              
+              <div class="input-field col s12 m6">
+                <select class="icons">
+                  <option value="" disabled selected>Choose Garment Material</option>
+                  <option value="" data-icon="https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png" class="left">example 1</option>
+                  <option value="" data-icon="https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png" class="left">example 2</option>
+                  <option value="" data-icon="https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png" class="left">example 3</option>
+                </select>
+                <label>Images in select</label>
+              </div>
+
+
+              <div class="input-field col s12 m6">
+                <select class="icons">
+                  <option value="" disabled selected>Choose Design</option>
+                  <option value="" data-icon="https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png" class="left">example 1</option>
+                  <option value="" data-icon="https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png" class="left">example 2</option>
+                  <option value="" data-icon="https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png" class="left">example 3</option>
+                </select>
+                <label>Images in select</label>
+              </div>
+
+              <div class="input-field col s12">
+                <textarea id="textarea1" class="materialize-textarea"></textarea>
+                <label for="textarea1">Notes</label>
+                <span class="helper-text">e.g. Large 5pcs, Small 3pcs, etc.</span>
+  
+              </div>
+            
+
+             <center> <img class="materialboxed" data-caption="A picture of a way with a group of trees in a park" width="250" src="https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png"></center>
+
+            
+
+<br>
+             <center><a class="waves-effect waves-light btn"><i class="material-icons left">file_download</i>Take Order</a></center>
+
+
+
+
+
+
+            </div>
+
+
+
+          </div>
+
+
+
+          </div>
+        </div>
+
+
+
+    
+      </div>
+ 
+      </div>
+
+      <script>
+        $(document).ready(function(){
+        $('.datepicker').datepicker();
+      });
+      
+  $(document).ready(function(){
+    $('select').formSelect();
+  });
+
+
+      // var $input = $('#dateprod').pickadate()
+
+      // var picker = $input.pickadate('picker')
+      // picker.set('select', new Date(2015, 3, 30))
+
+
+
+      var dt = new Date();
+      // document.getElementById('dateprod').value=dt;  
+      var instance = M.Datepicker.getInstance(document.getElementById('.datepicker'));
+      instance.setDate(new Date(2015, 3, 30));
+      instance._finishSelection();
+
+      // $('.datepicker').datepicker('setDate', "setDate")=new Date()
+      $('#dateprod').datepicker({
+  autoClose : true,
+  format : 'dd mmm yyyy',
+  setDefaultDate: '01-JAN-2000',
+  defaultDate : dt
+});
+// console.log(dt);
+
+
+    //Get the datepicker instance
+    // let instance = M.Datepicker.getInstance($('#dateprod'));
+
+    //Separated the date in array of parts
+    // let initial_date = $('#dateprod').val().split('/');
+
+    //Using the instance, set the default date
+    // instance.setDate(new Date(parseInt(initial_date[2]), parseInt(initial_date[1]) - 1, parseInt(initial_date[0])));
+    // M.Datepicker.getInstance(element)= new Date;
+    // var element = document.querySelector('#dateprod');
+    // M.Datepicker.getInstance(element).setDate(new Date(2018,8,7), true);
+    // instance._finishSelection();
+    </script>
+</body>
+</html>
