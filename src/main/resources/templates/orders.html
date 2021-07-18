@@ -28,15 +28,111 @@
 <body>
   
   <script>
-    function sample() {
-      console.log("pressed");
-    }
+    var sw = false;
+    var a = new Date();
+
+
+var b = new Date();
+var difference = document.getElementById
+
+function startTimer() {
+
+if (sw==false) {
+  sw=true;
+
+  a = new Date();
+  console.log(a);
+
+}
+}
+function stopTimer() {
+
+if(sw==true){
+  sw=false;
+  b = new Date();
+ difference += (b - a) / 1000;
+  console.log(difference+" diff");
+}
+}
+
+
+
+
+function updateOrderMachine(orderId, con)
+    		{
+                // var q = $("#quan"+myid).val(); 
+                console.log("clickedPuta");
+                var machineId = $("#mId").val(); 
+                if (con==0){
+                  $.ajax({
+    			  type: 'get',
+    			  url: "updateOrderMachine?orderId="+parseInt(orderId)+"&machineId="+parseInt(0),
+    			  success: function(data){
+              console.log("sakses tanginamo1");
+    				  $('#orderList').html(data);
+              updateOrderOnGoing(machineId);
+    				},
+    			});
+                }else{
+
+                  $.ajax({
+    			  type: 'get',
+    			  url: "updateOrderMachine?orderId="+parseInt(orderId)+"&machineId="+parseInt(machineId),
+    			  success: function(data){
+              console.log("sakses tanginamo1");
+    				  $('#orderList').html(data);
+              updateOrderOnGoing(machineId);
+    				},
+    			});
+
+                }
+    		
+
+     
+         
+    		};
+
+        function updateOrderOnGoing(machineId){
+          
+          $.ajax({
+    			  type: 'get',
+    			  url: "updateOrderOnGoing?machineId="+parseInt(machineId),
+    			  success: function(data){
+              console.log("sakses tanginamo" + data);
+              location.reload();
+    				  $('#oGDisp').html(data);
+              // $('#d1').load('/tang');
+              
+    				},
+    			});
+
+        };
+
+        var pauseToggle=false;
+        function togglePause() {
+
+          if (!pauseToggle) {
+             // document.getElementById("#pause").innerText="play_arrow";
+          // document.getElementById("pause").innerHTML = "play_arrow";
+          document.getElementById("pLink").innerHTML = "RESUME"+"<i id=\"pause\" class=\"material-icons\">play_arrow</i>";
+          document.getElementById("pLink").setAttribute("class", "lime-text");
+          pauseToggle=true;
+          }else{
+
+          document.getElementById("pLink").innerHTML = "PAUSE"+"<i id=\"pause\" class=\"material-icons\">pause</i>";
+          document.getElementById("pLink").setAttribute("class", "orange-text");
+          pauseToggle=false;
+          }
+
+          
+          
+        }
 
 
   </script>
 
     <!-- <img src="https://lorempixel.com/100/190/nature/6"> -->
-    <div class="row">
+    <div class="row" >
 
       <div class="col s2" >
   
@@ -48,18 +144,18 @@
           <center><li><a href="#!">Logs<i class="material-icons ">format_align_left</i></a></li></center>
         </ul>
       </div>
-
-      <div class="col s9">
+      <input type="text" th:value="${machineId}" id="mId" disabled hidden>
+      <div class="col s9"  >
     
       
       <div class="row" style="margin-left: 8%; margin-right: auto;">
     
-        <div class="col s12"  id="p1">
+        <div class="col s12"  id="tang" >
           <blockquote>
-            <h5 class="header">On Going Order</h5>
+            <h5 class="header">Production Queue</h5>
           </blockquote> 
-            <div class="col s12 m7" style="display: contents; justify-content: center;">
-                <center><h2 class="header">Order #abc123</h2></center>
+            <div class="col s12 m7" style="display: contents; justify-content: center;"  th:if="${onGoing != null}"  id="oGDisp"    th:fragment="onGoingDisp" >
+                <center><h2 class="header">Order <span th:text="${onGoing.order_number}" ></span></h2></center>
                 <div class="card horizontal">
                   <div class="card-image">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png">
@@ -72,25 +168,23 @@
                      <div class="row">
 
                       <div class="col s6">
-
-                        <p><b>Garment Type:</b>sadasd</p>
-                        <p><b>Garment Material:</b>sadasd</p>
-                        <p><b>Color Code:</b>dasd</p>
-                        <p><b>Design:</b>dsadas</p>
-
+                        <p><b>Garment Type:&nbsp</b><span th:each="garmentType : ${garmentTypes}" th:if="${garmentType.id == onGoing.garment_type_id}" th:text="${garmentType.name}">
+                        </span></p>
+                        <p><b>Garment Material:&nbsp</b><span th:each="garmentMaterial : ${garmentMaterials}" th:if="${garmentMaterial.id == onGoing.garment_material_id}" th:text="${garmentMaterial.name}">
+                        </span></p>
+                        <p><b>Color Code:&nbsp</b><span th:each="color : ${colors}" th:if="${color.id == onGoing.color_id}" th:text="${color.name}">
+                        </span></p>
+                        <p><b>Design:&nbsp</b><span th:text="${onGoing.design}" ></span></p>
                       </div>
-
                       <div class="col s6">
-
-                        <p><b>Date Received (Production):</b>dasd</p>
-                        <p><b>Date Started:</b>dasdasd</p>
-                        <p><b>Time Processed:</b>dasdsa</p>
-
+                        <p><b>Date Received (Production):&nbsp</b><span th:text="${onGoing.date_received}" ></span></p>
+                        <p><b>Date Started:&nbsp</b></p>
+                        <p><b>Time Processed:&nbsp</b><input type="text" name="" id="" th:value="${onGoing.time_processed}" disabled></p>
                       </div>
            
                       <div class="col s12">
 
-                        <p><b>Notes:</b>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a erat sit amet magna accumsan suscipit. Phasellus cursus congue turpis. Vestibulum id justo ante. Pellentesque faucibus feugiat diam, sed fermentum elit accumsan nec. </p>
+                        <p><b>Notes:&nbsp</b><span th:text="${onGoing.notes}" > </p>
                      
 
                       </div>
@@ -106,16 +200,69 @@
                       </div>
                     <div class="card-action">
                     <a href="#" class="deep-purple-text" onclick="sample()">Edit<i class="material-icons">edit</i></a>
-                    <a href="#" class="red-text" onclick="sample()">Stop<i class="material-icons">stop</i></a>
-                      <a href="#" class="orange-text">Pause<i class="material-icons">pause</i></a>
+                    <a href="#" class="red-text" th:onclick="'javascript:updateOrderMachine(' + ${onGoing.id} +','+'0' +')'">Stop<i class="material-icons">stop</i></a>
+                      <a href="#" class="orange-text" onclick="togglePause()" id="pLink">Pause<i id="pause" class="material-icons">pause</i></a>
                       <a href="#" class="green-text">Finish<i class="material-icons">check</i></a>
                     </div>
                   </div>
                 </div>
               </div>
 
+              <div class="col s12 m7" style="display: contents; justify-content: center;" th:unless="${onGoing != null}"   > 
+                <center><h2 class="header">Empty Queue</h2></center>
+                <div class="card horizontal">
+                  <div class="card-image">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png">
+                  </div>
+                  <div class="card-stacked">
+                    <div class="card-content">
+                      
+                    <center> 
+
+                     <div class="row">
+
+                      <div class="col s6">
+                        <p><b>Garment Type:&nbsp</b> Tshirt, Hoodie, etc.</p>
+                        <p><b>Garment Material:&nbsp</b> Cotton, Wool, etc.</p>
+                        <p><b>Color Code:&nbsp</b>Black, Blue, etc.</p>
+                        <p><b>Design:&nbsp</b>BMW.dst, Porsche.dst, etc.</p>
+                      </div>
+                      <div class="col s6">
+                        <p><b>Date Received (Production):&nbsp</b>Date when the order is received.</p>
+                        <p><b>Date Started:&nbsp</b> Date when the production of the order started.</p>
+                        <p><b>Time Processed:&nbsp</b> Production duration of the Order</p>
+                      </div>
+           
+                      <div class="col s12">
+
+                        <p><b>Notes:&nbsp</b>Pieces, Specific Instructions, etc.</p>
+                     
+
+                      </div>
+
+
+
+                     </div>
+                    
+                   
+                     
+                   
+                    </center> 
+                      </div>
+                    <!-- <div class="card-action">
+                    <a href="#" class="deep-purple-text" onclick="sample()">Edit<i class="material-icons">edit</i></a>
+                    <a href="#" class="red-text" onclick="stopTimer()">Stop<i class="material-icons">stop</i></a>
+                      <a href="#" class="orange-text" onclick="startTimer()">Pause<i class="material-icons">pause</i></a>
+                      <a href="#" class="green-text">Finish<i class="material-icons">check</i></a>
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+
  
     </div>
+
+    
    
   
 <div class="col s12" id="bord1"></div>
@@ -126,56 +273,42 @@
             <h5 class="header">Orders</h5>
           </blockquote> 
 
-          <ul class = "collapsible popout" data-collapsible = "accordion">
-            <li>
+          <ul class = "collapsible popout" data-collapsible = "accordion" th:fragment="ordersList" id="orderList">
+          
+            <li th:each="order : ${orders}" id="ordRow">
                <div class = "collapsible-header">
-                   <b>1. &nbsp</b>Order Number</div>
+                 <b> &nbsp<span th:text="${order.order_number}" ></span></b></div>
                <div class = "collapsible-body">
-
                   <div class="row">
-
                       <div class="col s6">
-
-                        <p><b>Garment Type:</b>sadasd</p>
-                        <p><b>Garment Material:</b>sadasd</p>
-                        <p><b>Color Code:</b>dasd</p>
-                        <p><b>Design:</b>dsadas</p>
-
+                        <p><b>Garment Type:</b><span th:each="garmentType : ${garmentTypes}" th:if="${garmentType.id == order.garment_type_id}" th:text="${garmentType.name}">
+                        </span></p>
+                        <p><b>Garment Material:</b><span th:each="garmentMaterial : ${garmentMaterials}" th:if="${garmentMaterial.id == order.garment_material_id}" th:text="${garmentMaterial.name}">
+                        </span></p>
+                        <p><b>Color Code:</b><span th:each="color : ${colors}" th:if="${color.id == order.color_id}" th:text="${color.name}">
+                        </span></p>
+                        <p><b>Design:</b><span th:text="${order.design}" ></span></p>
                       </div>
-
                       <div class="col s6">
-
-                        <p><b>Date Received (Production):</b>dasd</p>
+                        <p><b>Date Received (Production):&nbsp</b><span th:text="${order.date_received}" ></span></p>
                         <p><b>Date Started:</b>dasdasd</p>
-                        <p><b>Time Processed:</b>dasdsa</p>
-
+                        <p><b>Time Processed:</b><input type="text" name="" id="" th:value="${order.time_processed}" disabled></p>
                       </div>
-
-
-                     </div>
-                    
+                     </div> 
                 <div class="col s12" id="bord1"></div>
                 <div class="row">
-
-
-
-
-
-
-                  <div class="col s3">
+                  <div class="col s6">
                   <div class="card-action">
                     <a href="#" class="deep-purple-text link1" onclick="sample()">Edit<i class="material-icons">edit</i></a>
                     <a href="#" class="lightblue-text link1">Open<i class="material-icons">open_in_new</i></a>
-                    <a href="#" class="green-text link1" onclick="sample()">Start<i class="material-icons">play_arrow</i></a>
+                    <a href="#" class="green-text link1" th:onclick="'javascript:updateOrderMachine(' + ${order.id} +','+'1' +')'">Start<i class="material-icons">play_arrow</i></a>
                     <a href="#" class="red-text link1">Cancel<i class="material-icons">cancel</i></a>
-                    
-                  
                     </div>
                     </div>
                 </div>
-               
               </div>
             </li>
+
             
          </ul>
          
@@ -198,10 +331,7 @@ $(document).ready(function(){
   });
       
             
-  //     document.addEventListener('DOMContentLoaded', function() {
-  //   var elems = document.querySelectorAll('.collapsible');
-  //   var instances = M.Collapsible.init(elems, options);
-  // });
+
     </script>
 
 </body>

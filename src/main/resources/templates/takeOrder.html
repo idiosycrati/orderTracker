@@ -64,19 +64,20 @@
               
               
   <div class="container">
+    <form action="#" th:action="@{/saveOrder}" method="get" th:object="${orders}" id="form1">
               <div class="input-field col s12">
-                <input placeholder="#ABC123" id="first_name" type="text" class="validate">
+                <input placeholder="#ABC123" type="text" name="order_number" >
                 <label for="first_name">ORDER NUMBER</label>
               </div>
 
               <div class="input-field col s12">
-                <input type="text" class="datepicker" placeholder="dd-mm-yyyy" id="dateprod" >
+                <input type="text" class="datepicker" placeholder="dd-mm-yyyy" id="dateprod" name="date_received" >
                 <label for="dateprod">DATE RECEIEVED (PRODUCTION) </label>
               </div>
 
 
               <div class="input-field col s12">
-                <input placeholder="#ABC123" id="first_name" type="text" class="validate">
+                <input placeholder="#ABC123" id="first_name" type="text" class="validate" name="color_id">
                 <label for="first_name">COLOR NUMBER</label>
               </div>
 
@@ -88,39 +89,34 @@
               </div> -->
 
               <div class="input-field col s12 m6">
-                <select class="icons">
+                <select class="icons" name="garment_type_id">
                   <option value="" disabled selected>Choose Garment</option>
-                  <option value="" data-icon="https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png" class="left">example 1</option>
-                  <option value="" data-icon="https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png" class="left">example 2</option>
-                  <option value="" data-icon="https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png" class="left">example 3</option>
+                  <option value="1" data-icon="https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png" class="left">example 1</option>
+                  <option value="2" data-icon="https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png" class="left">example 2</option>
+                  <option value="3" data-icon="https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png" class="left">example 3</option>
                 </select>
-                <label>Images in select</label>
+                <label>Garment Type</label>
               </div>
 
               
               <div class="input-field col s12 m6">
-                <select class="icons">
+                <select class="icons" name="garment_material_id">
                   <option value="" disabled selected>Choose Garment Material</option>
-                  <option value="" data-icon="https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png" class="left">example 1</option>
-                  <option value="" data-icon="https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png" class="left">example 2</option>
-                  <option value="" data-icon="https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png" class="left">example 3</option>
+                  <option value="1" data-icon="https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png" class="left">example 1</option>
+                  <option value="2" data-icon="https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png" class="left">example 2</option>
+                  <option value="3" data-icon="https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png" class="left">example 3</option>
                 </select>
-                <label>Images in select</label>
+                <label>Garment Material</label>
               </div>
 
 
-              <div class="input-field col s12 m6">
-                <select class="icons">
-                  <option value="" disabled selected>Choose Design</option>
-                  <option value="" data-icon="https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png" class="left">example 1</option>
-                  <option value="" data-icon="https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png" class="left">example 2</option>
-                  <option value="" data-icon="https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png" class="left">example 3</option>
-                </select>
-                <label>Images in select</label>
+              <div class="input-field col s12">
+                <input placeholder="#ABC123" id="design" type="text" class="validate" name="design">
+                <label for="design">Design</label>
               </div>
 
               <div class="input-field col s12">
-                <textarea id="textarea1" class="materialize-textarea"></textarea>
+                <textarea id="textarea1" class="materialize-textarea" name="notes" ></textarea>
                 <label for="textarea1">Notes</label>
                 <span class="helper-text">e.g. Large 5pcs, Small 3pcs, etc.</span>
   
@@ -132,9 +128,11 @@
             
 
 <br>
-             <center><a class="waves-effect waves-light btn"><i class="material-icons left">file_download</i>Take Order</a></center>
+<!-- <button type="submit">Submit</button> -->
+             <center><a class="waves-effect waves-light btn" onclick=" console.log('tangina');document.getElementById('form1').submit(); return false;" ><i class="material-icons left" >file_download</i>Take Order</a></center>
+             <!-- <a href="javascript:{}" onclick="document.getElementById('my_form').submit(); return false;">submit</a> -->
 
-
+            </form>
 
 
 
@@ -166,6 +164,33 @@
     $('select').formSelect();
   });
 
+  function dt() {
+    console.log(document.getElementById('dateprod').value)
+    
+  }
+
+  $(function() {
+    $('.datepicker').datepicker( {
+        onClose: function(date) {
+            // alert(date);
+            console.log(document.getElementById('dateprod').value)
+
+        },
+        selectWeek: true,
+        inline: true,
+
+        firstDay: 1,
+        // format : 'yyyy-dd-mm'
+    });
+
+
+//           $('.dateprod').datepicker({
+//   autoClose : true,
+//   format : 'yyyy dd ',
+//   setDefaultDate: '01-JAN-2000',
+//   defaultDate : dt
+// });
+});
 
       // var $input = $('#dateprod').pickadate()
 
@@ -174,19 +199,19 @@
 
 
 
-      var dt = new Date();
+      // var dt = new Date();
       // document.getElementById('dateprod').value=dt;  
-      var instance = M.Datepicker.getInstance(document.getElementById('.datepicker'));
-      instance.setDate(new Date(2015, 3, 30));
-      instance._finishSelection();
+      // var instance = M.Datepicker.getInstance(document.getElementById('.datepicker'));
+      // instance.onSelect(dt);
+      // instance._finishSelection();
 
       // $('.datepicker').datepicker('setDate', "setDate")=new Date()
-      $('#dateprod').datepicker({
-  autoClose : true,
-  format : 'dd mmm yyyy',
-  setDefaultDate: '01-JAN-2000',
-  defaultDate : dt
-});
+//       $('#dateprod').datepicker({
+//   autoClose : true,
+//   format : 'dd mmm yyyy',
+//   setDefaultDate: '01-JAN-2000',
+//   defaultDate : dt
+// });
 // console.log(dt);
 
 
