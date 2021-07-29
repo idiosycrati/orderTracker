@@ -54,6 +54,9 @@ public class Orders {
     @Column(name = "machine")
     private int machine;
 
+    @Column(name = "is_done")
+    private int is_done;
+
     
     // @Column(name = "date_started")
     // private String date_started;
@@ -95,6 +98,10 @@ public class Orders {
         return time_processed;
     }
 
+    public int getIs_done(){
+      return is_done;
+  }
+
     public void setId(int id) {
         this.id = id;
       }
@@ -131,6 +138,10 @@ public class Orders {
       public void setTimeProcessed(int time_processed){
         this.time_processed = time_processed;
     }
+
+    public void setIs_done(int is_done){
+      this.is_done = is_done;
+  }
 
 // 
 

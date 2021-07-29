@@ -58,6 +58,26 @@ if(sw==true){
 
 
 
+function updateStateMachine(orderId, state)
+    		{
+                // var q = $("#quan"+myid).val(); 
+                console.log("state "+state );
+                var machineId = $("#mId").val(); 
+              
+                  $.ajax({
+    			  type: 'get',
+    			  url: "updateOrderState?orderId="+parseInt(orderId)+"&state="+parseInt(state),
+    			  success: function(data){
+              console.log("sakses tanginamo1");
+    				  $('#orderList').html(data);
+              updateOrderOnGoing(machineId);
+    				},
+    			});
+    		
+     
+         
+    		};
+
 function updateOrderMachine(orderId, con)
     		{
                 // var q = $("#quan"+myid).val(); 
@@ -139,9 +159,9 @@ function updateOrderMachine(orderId, con)
         <ul id="slide-out" class="sidenav sidenav-fixed">
           <center><li class="active"><a th:href="@{/}">Production<i class="material-icons">loop</i></a></li></center>
           <center><li><a th:href="@{/takeOrder}">Take Orders<i class="material-icons">local_grocery_store</i></a></li></center>
-          <center><li><a href="#!">Shipping<i class="material-icons ">local_shipping</i></a></li></center>
+          <center><li><a th:href="@{/shipping}">Shipping<i class="material-icons ">local_shipping</i></a></li></center>
           <center><li><a href="#!">Inventory<i class="material-icons ">storage</i></a></li></center>
-          <center><li><a href="#!">Logs<i class="material-icons ">format_align_left</i></a></li></center>
+          <center><li><a href="#!">Logs<i class="material-icons">format_align_left</i></a></li></center>
         </ul>
       </div>
       <input type="text" th:value="${machineId}" id="mId" disabled hidden>
@@ -202,14 +222,14 @@ function updateOrderMachine(orderId, con)
                     <a href="#" class="deep-purple-text" onclick="sample()">Edit<i class="material-icons">edit</i></a>
                     <a href="#" class="red-text" th:onclick="'javascript:updateOrderMachine(' + ${onGoing.id} +','+'0' +')'">Stop<i class="material-icons">stop</i></a>
                       <a href="#" class="orange-text" onclick="togglePause()" id="pLink">Pause<i id="pause" class="material-icons">pause</i></a>
-                      <a href="#" class="green-text">Finish<i class="material-icons">check</i></a>
+                      <a href="#" class="green-text" th:onclick="'javascript:updateStateMachine(' + ${onGoing.id} +','+'1' +')'" >Finish<i class="material-icons">check</i></a>
                     </div>
                   </div>
                 </div>
               </div>
 
               <div class="col s12 m7" style="display: contents; justify-content: center;" th:unless="${onGoing != null}"   > 
-                <center><h2 class="header">Empty Queue</h2></center>
+                <center><h2 class="header"><i class="material-icons">report_problem</i> &nbspEmpty Queue &nbsp<i class="material-icons">report_problem</i></h2></center>
                 <div class="card horizontal">
                   <div class="card-image">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png">
@@ -267,12 +287,12 @@ function updateOrderMachine(orderId, con)
   
 <div class="col s12" id="bord1"></div>
 
+
+
         <div class="col s12" id="p2"   >
-    
           <blockquote>
             <h5 class="header">Orders</h5>
           </blockquote> 
-
           <ul class = "collapsible popout" data-collapsible = "accordion" th:fragment="ordersList" id="orderList">
           
             <li th:each="order : ${orders}" id="ordRow">

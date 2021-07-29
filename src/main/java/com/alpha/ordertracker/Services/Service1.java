@@ -7,6 +7,7 @@ import com.alpha.ordertracker.Entities.Colors;
 import com.alpha.ordertracker.Entities.GarmentMaterials;
 import com.alpha.ordertracker.Entities.GarmentTypes;
 import com.alpha.ordertracker.Entities.Orders;
+import com.alpha.ordertracker.Entities.Shipping;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,6 +56,11 @@ public class Service1 implements Service1Inerface {
     }
 
     @Override
+    public void updateOrderState_machine(int orderId, int state) {
+    dao.updateOrderState_machine(orderId, state);
+    }
+
+    @Override
     public void updateOrders_machine(int orderId, int machineId) {
         dao.updateOrders_machine(orderId, machineId);
         
@@ -70,15 +76,36 @@ public class Service1 implements Service1Inerface {
 
     @Override
     public List<GarmentTypes> findAllGarmentTypes() {
-        // TODO Auto-generated method stub
+    
         return dao.findAllGarmentTypes();
     }
 
     @Override
     public List<GarmentMaterials> findAllGarmentMaterials() {
-        // TODO Auto-generated method stub
+      
         return dao.findAllGarmentMaterials();
     }
+
+    @Override
+    public List<Orders> findAllToShipOrders() {
+       
+        return dao.findAllToShipOrders();
+    }
+
+    @Override
+    public void addShipping(Shipping receivedShipping) {
+      
+    dao.addShipping(receivedShipping);
+        
+    }
+
+    @Override
+    public List<Orders> findAllShippedOrders() {
+        // TODO Auto-generated method stub
+        return dao.findAllShippedOrders();
+    }
+
+  
 
 
    

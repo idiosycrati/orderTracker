@@ -1,6 +1,7 @@
 package com.alpha.ordertracker.Controllers;
 
 import com.alpha.ordertracker.Entities.Orders;
+import com.alpha.ordertracker.Entities.Shipping;
 import com.alpha.ordertracker.Services.Service1;
 
 import org.slf4j.Logger;
@@ -59,13 +60,23 @@ public String saveOrder(@ModelAttribute Orders receivedOrder ,Model model){
 
 service1.addOrder(receivedOrder);
 
-    return "takeOrder";
+    return "redirect:takeOrder";
 }
 
 @RequestMapping("/updateOrderMachine")
 public String updateOrderMachine(@RequestParam int orderId,@RequestParam int machineId, Model model){
     logger.info("oid "+orderId+" mid "+machineId);
     service1.updateOrders_machine(orderId, machineId);
+    model.addAttribute("orders", service1.findAllOrders());
+    
+
+    return "orders :: ordersList";
+}
+
+@RequestMapping("/updateOrderState")
+public String updateStateMachine(@RequestParam int orderId,@RequestParam int state, Model model){
+    logger.info("oid "+orderId+" state "+state);
+    service1.updateOrderState_machine(orderId, state);
     model.addAttribute("orders", service1.findAllOrders());
     
 
@@ -98,8 +109,18 @@ public String updateOrderOnGoing(@RequestParam int machineId, Model model){
 
 // TODO: SHIPPING
 @RequestMapping("/shipping")
-public String shipping(){
+public String shipping(Model model){
+    model.addAttribute("toships",service1.findAllToShipOrders());
+    model.addAttribute("shipped", service1.findAllShippedOrders());
     return "shipping";
+}
+
+@RequestMapping("/saveShipping")
+public String saveShipping(@ModelAttribute Shipping receivedShipping ,Model model){
+//   logger.info(receivedShipping."putangina");
+service1.addShipping(receivedShipping);
+
+    return "redirect:shipping";
 }
 
 

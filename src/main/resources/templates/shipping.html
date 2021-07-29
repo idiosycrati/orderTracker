@@ -1,11 +1,29 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org">
+ <html xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" href="css/styles.css">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet">
+
+    <link rel = "stylesheet"
+  href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+<script type = "text/javascript"
+  src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+
+
     <title>Document</title>
 </head>
 <body>
@@ -14,63 +32,161 @@
       console.log("pressed");
     }
 
+    function populateShipInfo(toShipOrderId) {
+      console.log($('#ordnum'+toShipOrderId).attr('value')+" dasd");
+      var ordernumber = $('#ordnum'+toShipOrderId).attr('value'); 
+            $("#ordNum").val(ordernumber);
+            $("#key").val(toShipOrderId+"");
+         
+            console.log(ordernumber+"on  tso"+toShipOrderId);
+    }
+
+
+
+
   </script>
-<div class="container">
-    <!-- <img src="https://lorempixel.com/100/190/nature/6"> -->
-    <ul id="slide-out" class="sidenav sidenav-fixed">
-        <center><li ><a th:href="@{/}">Orders</a></li></center>
-        <center><li class="active"><a th:href="@{/takeOrder}">Take Orders</a></li></center>
-        <center><li><a href="#!">Shipping</a></li></center>
-        <center><li><a href="#!">Inventory</a></li></center>
-        <center><li><a href="#!">Logs</a></li></center>
-      </ul>
-      <!-- <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a> -->
+<div class="row">
 
-      <div class="row">
-      
-        <div class="col s12 offset-s1"  id="p1">
-            <!-- <div class="container"> -->
-            <div class="col s12 m7" style="display: contents; justify-content: center;">
-                <center><h2 class="header">Horizontal Card</h2></center>
-                <div class="card horizontal">
-                  <div class="card-image">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png">
+<div class="col s2" >
+
+  <ul id="slide-out" class="sidenav sidenav-fixed">
+    <center><li ><a th:href="@{/}">Production<i class="material-icons">loop</i></a></li></center>
+    <center><li ><a th:href="@{/takeOrder}">Take Orders<i class="material-icons">local_grocery_store</i></a></li></center>
+    <center><li class="active" ><a  th:href="@{/shipping}">Shipping<i class="material-icons ">local_shipping</i></a></li></center>
+    <center><li><a href="#!">Inventory<i class="material-icons ">storage</i></a></li></center>
+    <center><li><a href="#!">Logs<i class="material-icons ">format_align_left</i></a></li></center>
+  </ul>
+</div>
+
+<div class="col s9">
+
+
+  <div class="row" style="margin-left: 8%;">
+    <form action="#" id="form2" th:action="@{/saveShipping}" method="get" th:object="${shipping}" >
+    <div class="input-field col s6 offset-s3">
+      <input type="text" name="order_id" id="key" hidden>
+      <input placeholder="" id="ordNum" type="text" class="validate" disabled required>
+      <label for="ordNum">Order Number:</label>
+    </div>
+
+    <div class="input-field col s6">
+      <input placeholder="Shipping Courier:" id="shipCour" type="text" class="validate" name="shipping_courier">
+      <label for="first_name">Shipping Courier:</label>
+    </div>
+
+
+    <div class="input-field col s6">
+      <input placeholder="#1234" id="refNum" type="text" class="validate" name="reference_number">
+      <label for="first_name">Reference Number: </label>
+    </div>
+    <div class="input-field col s12">
+      <textarea id="textarea2" class="materialize-textarea" data-length="120" name="tracking_details"></textarea>
+      <label for="textarea2">Tracking Details</label>
+    </div>
+
+    <center><a class=" waves-light btn  col s12" onclick=" console.log('tangina');document.getElementById('form2').submit(); return false; location.reload();" >SHIP</a></center>
+
+  </form>
+    <div class="col s12"  id="p1">
+      <blockquote>
+        <h5 class="header">To Ship</h5>
+      </blockquote>
+
+
+
+      <ul class = "collapsible popout" data-collapsible = "accordion" th:fragment="ordersList" id="orderList">
+        <li id="ordRow" th:each="toship : ${toships}">
+           <div class = "collapsible-header">
+             <b> &nbsp<span th:text="${toship.order_number}" th:id="'ordnum' + ${toship.id}" th:value="${toship.order_number}">#orderid</span></b></div>
+           <div class = "collapsible-body">
+              <div class="row">
+                  <div class="col s6">
+                    <p><b>Garment Type:</b><span >
+                    </span></p>
+                    <p><b>Garment Material:</b><span >
+                    </span></p>
+                    <p><b>Color Code:</b><spa >
+                    </span></p>
+                    <p><b>Design:</b><span ></span></p>
                   </div>
-                  <div class="card-stacked">
-                    <div class="card-content">
-                      <p>I am a very simple card. I am good at containing small bits of information.</p>
-                    </div>
-                    <div class="card-action">
-                    <a href="#" class="red-text" onclick="sample()">Stop</a>
-                      <a href="#" class="orange-text">Pause</a>
-                      <a href="#" class="green-text">Finish</a>
-                    </div>
+                  <div class="col s6">
+                    <p><b>Date Received (Production):&nbsp</b><span ></span></p>
+                    <p><b>Date Started:</b>dasdasd</p>
+                    <p><b>Time Processed:</b><input type="text" name="" id="" disabled></p>
                   </div>
+                 </div>
+            <div class="col s12" id="bord1"></div>
+            <div class="row">
+              <div class="col s6">
+              <div class="card-action">
+                <a href="#" class="deep-purple-text link1" onclick="sample()">Edit<i class="material-icons">edit</i></a>
+                <a href="#" class="lightblue-text link1">Open<i class="material-icons">open_in_new</i></a>
+                <a href="#" class="green-text link1" th:onclick="'javascript:populateShipInfo(' + ${toship.id} +')'" >Ship<i class="material-icons">local_shipping</i></a>
+                <a href="#" class="red-text link1">Cancel<i class="material-icons">cancel</i></a>
                 </div>
-              </div>
+                </div>
+            </div>
+          </div>
+        </li>
 
-        <!-- </div> -->
+
+     </ul>
+
     </div>
-<div class="col s12 offset-s1" id="bord1"></div>
 
-    <!-- <div class="divider"></div> -->
-        <div class="col s12 offset-s1 " id="p1"   >
-            <!-- <div class="container" > -->
-                <div class="collection with-header">
-                    <center><li class="collection-header" id="idex"><h4>Orders</h4></li></center>
-                    <a href="#!" class="collection-item">Alvin</a>
-                    <a href="#!" class="collection-item active">Alvin</a>
-                    <a href="#!" class="collection-item">Alvin</a>
-                    <a href="#!" class="collection-item">Alvin</a>
+    <div class="col s12" id="bord1"></div>
+
+    <div class="col s12"  id="p1">
+      <blockquote>
+        <h5 class="header">Shipped</h5>
+      </blockquote>
+
+
+      <ul class = "collapsible popout" data-collapsible = "accordion" th:fragment="ordersList" id="orderList">
+        <li id="ordRow" th:each="e : ${shipped}">
+           <div class = "collapsible-header">
+             <b> &nbsp<span th:text="${e.order_number}"></span></b></div>
+           <div class = "collapsible-body">
+              <div class="row">
+                  <div class="col s6">
+                    <p><b>Garment Type:</b><span >
+                    </span></p>
+                    <p><b>Garment Material:</b><span >
+                    </span></p>
+                    <p><b>Color Code:</b><spa >
+                    </span></p>
+                    <p><b>Design:</b><span ></span></p>
                   </div>
-                        
-            <!-- </div> -->
-        </div>
-        
-        <!-- <div class="divider"></div> -->
-      </div>
-      
+                  <div class="col s6">
+                    <p><b>Date Received (Production):&nbsp</b><span ></span></p>
+                    <p><b>Date Started:</b>dasdasd</p>
+                    <p><b>Time Processed:</b><input type="text" name="" id="" disabled></p>
+                  </div>
+                 </div>
+            <div class="col s12" id="bord1"></div>
+            <div class="row">
+              <div class="col s6">
+              <div class="card-action">
+                <a href="#" class="deep-purple-text link1" onclick="sample()">Edit<i class="material-icons">edit</i></a>
+                <a href="#" class="lightblue-text link1">Open<i class="material-icons">open_in_new</i></a>
+                <a href="#" class="green-text link1" >Start<i class="material-icons">play_arrow</i></a>
+                <a href="#" class="red-text link1">Cancel<i class="material-icons">cancel</i></a>
+                </div>
+                </div>
+            </div>
+          </div>
+        </li>
+
+
+     </ul>
     </div>
-    
+
+
+    </div>
+
+</div>
+
+</div>
+
 </body>
 </html>

@@ -9,6 +9,7 @@ import com.alpha.ordertracker.Entities.Colors;
 import com.alpha.ordertracker.Entities.GarmentMaterials;
 import com.alpha.ordertracker.Entities.GarmentTypes;
 import com.alpha.ordertracker.Entities.Orders;
+import com.alpha.ordertracker.Entities.Shipping;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -33,7 +34,7 @@ public class DAO implements DAOInterface {
         this.entityManager=entityManager;
     }
 
-
+// TODO: Colors
 
     @Override
     @Transactional
@@ -127,11 +128,12 @@ try {
 
 
     @Override
+    @Transactional
     public List<Orders> findAllOrders() {
 
         Session currentSession= entityManager.unwrap(Session.class);
 
-        Query<Orders> ordersQ = currentSession.createQuery("from Orders where machine = 0", Orders.class);
+        Query<Orders> ordersQ = currentSession.createQuery("from Orders where machine = 0 and is_done=0", Orders.class);
         List<Orders> orders = ordersQ.getResultList();
         return orders;
     
@@ -150,6 +152,19 @@ try {
         updateOrders.executeUpdate();
     }
 
+    @Override
+    @Transactional
+    public void updateOrderState_machine(int orderId, int state) {
+        
+        Session currentSession= entityManager.unwrap(Session.class);
+
+        Query updateOrders = currentSession.createQuery("update Orders a set a.is_done= :isDone where a.id=:orderId");
+        updateOrders.setParameter("isDone", state);
+        updateOrders.setParameter("orderId", orderId);
+        updateOrders.executeUpdate();
+        
+    }
+
 
     @Override
     public Orders findOnGoingOrderPerMachine(int machineId) {
@@ -159,7 +174,7 @@ try {
         try {
             
        
-        Query<Orders> ordersQ = currentSession.createQuery("from Orders where not machine = 0 and machine= :machineId", Orders.class);
+        Query<Orders> ordersQ = currentSession.createQuery("from Orders where not machine = 0 and machine= :machineId and is_done=0", Orders.class);
         ordersQ.setParameter("machineId", machineId);
 
        orders = ordersQ.getSingleResult();
@@ -202,6 +217,63 @@ try {
     
 
     }
+
+// TODO: Shipping
+
+    @Override
+    public List<Orders> findAllToShipOrders() {
+       
+        
+        Session currentSession= entityManager.unwrap(Session.class);
+        // select * from orders where is_done=1 and orders.id NOT in(select order_id from shipping);
+        Query<Orders> ordersQ = currentSession.createQuery("from Orders as a where a.machine = 1 and a.is_done=1 and a.id NOT in(select order_id from Shipping)", Orders.class);
+        List<Orders> orders = ordersQ.getResultList();
+        return orders;
+    
+    }
+
+    @Override
+    @Transactional
+    public void addShipping(Shipping receivedShipping) {
+       
+        Logger logger = LoggerFactory.getLogger(DAO.class);
+
+try {
+    
+        Session currentSession= entityManager.unwrap(Session.class);
+
+       
+      
+        currentSession.save(receivedShipping);    
+       
+     
+    } catch (Exception e) {
+        logger.info("Error: "+e);
+
+       
+    }
+    }
+
+    @Override
+    public List<Orders> findAllShippedOrders() {
+       try {
+           
+      
+        Session currentSession= entityManager.unwrap(Session.class);
+      // select * from orders,shipping where is_done=1 and orders.id in(select order_id from shipping) and orders.id=shipping.order_id ;
+        Query<Orders> ordersQ = currentSession.createQuery("from Orders as a where a.is_done=1 and a.id in(select b.order_id from Shipping as b where b.order_id=a.id)", Orders.class);
+        List<Orders> orders = ordersQ.getResultList();
+        return orders;
+    } catch (Exception e) {
+        //TODO: handle exception
+        return null;
+    }
+      
+    }
+
+
+
+   
 
 
 

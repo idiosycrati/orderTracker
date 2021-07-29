@@ -44,7 +44,7 @@
         <ul id="slide-out" class="sidenav sidenav-fixed">
           <center><li ><a th:href="@{/}">Production<i class="material-icons">loop</i></a></li></center>
           <center><li class="active"><a th:href="@{/takeOrder}">Take Orders<i class="material-icons">local_grocery_store</i></a></li></center>
-          <center><li><a href="#!">Shipping<i class="material-icons ">local_shipping</i></a></li></center>
+          <center><li><a th:href="@{/shipping}">Shipping<i class="material-icons ">local_shipping</i></a></li></center>
           <center><li><a href="#!">Inventory<i class="material-icons ">storage</i></a></li></center>
           <center><li><a href="#!">Logs<i class="material-icons ">format_align_left</i></a></li></center>
         </ul>
@@ -91,9 +91,7 @@
               <div class="input-field col s12 m6">
                 <select class="icons" name="garment_type_id">
                   <option value="" disabled selected>Choose Garment</option>
-                  <option value="1" data-icon="https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png" class="left">example 1</option>
-                  <option value="2" data-icon="https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png" class="left">example 2</option>
-                  <option value="3" data-icon="https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png" class="left">example 3</option>
+                  <option data-icon="https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png" class="left"  th:each="garment : ${garmentTypes}" th:value="${garment.id}" th:text="${garment.name}"></option>
                 </select>
                 <label>Garment Type</label>
               </div>
@@ -102,9 +100,8 @@
               <div class="input-field col s12 m6">
                 <select class="icons" name="garment_material_id">
                   <option value="" disabled selected>Choose Garment Material</option>
-                  <option value="1" data-icon="https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png" class="left">example 1</option>
-                  <option value="2" data-icon="https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png" class="left">example 2</option>
-                  <option value="3" data-icon="https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png" class="left">example 3</option>
+                  <option value="1" data-icon="https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png" class="left" th:each="material : ${garmentMaterials}" th:value="${material.id}" th:text="${material.name}"></option>
+            
                 </select>
                 <label>Garment Material</label>
               </div>
